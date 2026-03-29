@@ -26,7 +26,7 @@ jobs:
         run: go list ./...
 
       - name: リント実行
-        run: golangci-lint run ./cmd/...
+        run: golangci-lint run ./...
         env:
-          GOTOOLCHAIN: local
+          TOOLCHAIN: local
           CGO_ENABLED: "0"
