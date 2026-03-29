@@ -16,8 +16,8 @@ jobs:
           go-version-file: go.mod
           cache: false
 
-      - name: 依存パッケージの取得とビルドキャッシュの準備
-        run: go build ./...
+      - name: 依存パッケージの取得
+        run: go mod download
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
