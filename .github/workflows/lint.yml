@@ -22,5 +22,8 @@ jobs:
       - name: 依存パッケージの取得
         run: go mod download
 
+      - name: パッケージ確認（デバッグ）
+        run: go list ./...
+
       - name: リント実行
         run: golangci-lint run ./...
