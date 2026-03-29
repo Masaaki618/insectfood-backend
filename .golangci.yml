@@ -11,10 +11,9 @@ linters:
     - unused       # 未使用コードの検出
     - misspell     # スペルミス検出
     - noctx        # contextなしのHTTPリクエスト検出
-
-issues:
-  exclude-rules:
-    # テストファイルはerrcheckを緩める
-    - path: _test\.go
-      linters:
-        - errcheck
+  exclusions:
+    rules:
+      # テストファイルはerrcheckを緩める
+      - path: _test\.go
+        linters:
+          - errcheck
