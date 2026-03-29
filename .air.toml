@@ -1,0 +1,18 @@
+[build]
+  # ビルドコマンド
+  cmd = "go build -o ./tmp/main ./cmd/server"
+  # 実行バイナリ
+  bin = "./tmp/main"
+  # 監視対象の拡張子
+  include_ext = ["go"]
+  # 除外ディレクトリ
+  exclude_dir = ["tmp", "vendor", "rdb"]
+  # ビルドエラー時もwatchを続ける
+  kill_delay = "200ms"
+
+[log]
+  time = false
+
+[color]
+  build = "yellow"
+  runner = "green"
