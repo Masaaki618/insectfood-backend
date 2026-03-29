@@ -21,3 +21,6 @@ coverage.html
 
 # air（ホットリロード）
 tmp/
+
+# MCP cipher セッションDB（自動生成）
+data/
