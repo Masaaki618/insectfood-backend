@@ -11,6 +11,7 @@ linters:
     - unused       # 未使用コードの検出
     - misspell     # スペルミス検出
     - noctx        # contextなしのHTTPリクエスト検出
+    - mnd          # マジックナンバーの検出
   exclusions:
     rules:
       # テストファイルはerrcheckを緩める

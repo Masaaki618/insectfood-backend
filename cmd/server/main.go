@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 
 	"github.com/gin-gonic/gin"
@@ -12,7 +13,7 @@ func main() {
 
 	// ヘルスチェック用（後でissue #4で正式実装）
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{"message": "ok"})
+		c.JSON(http.StatusOK, gin.H{"message": "ok"})
 	})
 
 	port := os.Getenv("SERVER_PORT")
