@@ -19,8 +19,8 @@ jobs:
       - name: golangci-lintのインストール
         run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.10.1
 
-      - name: 依存パッケージの取得
-        run: go mod download
+      - name: 依存パッケージの整理と取得
+        run: go mod tidy && go mod download
 
       - name: パッケージ確認（デバッグ）
         run: go list ./...
