@@ -14,7 +14,7 @@
 *.exe
 *.out
 vendor/
-server
+/server
 
 # テストカバレッジ
 coverage.out
