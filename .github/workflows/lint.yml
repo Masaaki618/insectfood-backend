@@ -14,13 +14,13 @@ jobs:
       - uses: actions/setup-go@v5
         with:
           go-version-file: go.mod
-          cache: false
+          cache: true
+
+      - name: golangci-lintのインストール
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.10.1
 
       - name: 依存パッケージの取得
         run: go mod download
 
-      - name: golangci-lint
-        uses: golangci/golangci-lint-action@v7
-        with:
-          version: v2.10.1
-          args: --verbose
+      - name: リント実行
+        run: golangci-lint run ./...
