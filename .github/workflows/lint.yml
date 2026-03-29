@@ -27,3 +27,5 @@ jobs:
 
       - name: リント実行
         run: golangci-lint run ./...
+        env:
+          GOTOOLCHAIN: local
