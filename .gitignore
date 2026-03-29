@@ -1,0 +1,23 @@
+# 環境変数・機密情報
+.env
+.env.local
+.env.*.local
+
+# macOS
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Go
+*.exe
+*.out
+vendor/
+
+# テストカバレッジ
+coverage.out
+coverage.html
+
+# air（ホットリロード）
+tmp/
