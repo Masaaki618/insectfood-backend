@@ -36,12 +36,12 @@ Router → Controller → Service → Repository → DB
 
 ```
 internal/
-├── router/         # ルーティング定義
-├── controller/     # リクエスト/レスポンス処理
-├── service/        # ビジネスロジック + Claude API呼び出し
-├── repository/     # DBアクセス
-├── model/          # DBモデル定義
-├── dto/            # リクエスト/レスポンスの型定義
+├── routers/        # ルーティング定義
+├── controllers/    # リクエスト/レスポンス処理
+├── services/       # ビジネスロジック + Claude API呼び出し
+├── repositories/   # DBアクセス
+├── models/         # DBモデル定義
+├── dtos/           # リクエスト/レスポンスの型定義
 └── infrastructure/ # DB接続・Claude APIクライアント
 rdb/migrations/     # マイグレーションファイル（golang-migrate）
 ```
