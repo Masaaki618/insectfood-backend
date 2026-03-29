@@ -16,6 +16,9 @@ jobs:
           go-version-file: go.mod
           cache: false
 
+      - name: 依存パッケージの取得
+        run: go mod download
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v7
         with:
