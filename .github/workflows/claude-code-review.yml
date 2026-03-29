@@ -1,14 +1,10 @@
 name: Claude Code Review
 
-on:
-  pull_request:
-    types: [opened]
-    # Optional: Only run on specific file changes
-    # paths:
-    #   - "src/**/*.ts"
-    #   - "src/**/*.tsx"
-    #   - "src/**/*.js"
-    #   - "src/**/*.jsx"
+# 一時無効化中（トークン消費抑制のため）
+# on:
+#   pull_request:
+#     types: [opened]
+on: workflow_dispatch  # 手動実行のみ（実質無効化）
 
 jobs:
   claude-review:
