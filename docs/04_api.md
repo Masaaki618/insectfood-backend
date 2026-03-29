@@ -174,16 +174,18 @@
 
 ```json
 {
-  "insect": {
-    "id": 3,
-    "name": "シルクワーム",
-    "difficulty": 2,
-    "introduction": "白くてまるっとした見た目で初心者向け",
-    "taste": "クリーミー",
-    "texture": "もちもち",
-    "insect_img": "https://example.com/images/silkworm.png"
-  },
-  "comment": "見た目への耐性は高いあなたですが、まだ身体的には慎重派。白くてまるっとしたシルクワームならきっと挑戦しやすいはずです！"
+  "data": {
+    "insect": {
+      "id": 3,
+      "name": "シルクワーム",
+      "difficulty": 2,
+      "introduction": "白くてまるっとした見た目で初心者向け",
+      "taste": "クリーミー",
+      "texture": "もちもち",
+      "insect_img": "https://example.com/images/silkworm.png"
+    },
+    "ai_comment": "見た目への耐性は高いあなたですが、まだ身体的には慎重派。白くてまるっとしたシルクワームならきっと挑戦しやすいはずです！"
+  }
 }
 ```
 
@@ -333,11 +335,13 @@
 
 ```json
 {
-  "insect": {
-    "id": 1,
-    "name": "コオロギパウダー",
-    ...
-  },
-  "comment": "まずは食べやすいコオロギパウダーから始めてみましょう！"
+  "data": {
+    "insect": {
+      "id": 1,
+      "name": "コオロギパウダー",
+      ...
+    },
+    "ai_comment": "まずは食べやすいコオロギパウダーから始めてみましょう！"
+  }
 }
 ```

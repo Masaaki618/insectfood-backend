@@ -222,12 +222,15 @@ components:
     DiagnosisResponse:
       type: object
       properties:
-        insect:
-          $ref: "#/components/schemas/Insect"
-        ai_comment:
-          type: string
-          description: Claude Haiku 4.5が生成したパーソナライズコメント
-          example: 挑戦する気持ちが強いあなたに、白くてまるっとしたシルクワームはいかがでしょう。クリーミーな味わいにきっと驚くはずです。
+        data:
+          type: object
+          properties:
+            insect:
+              $ref: "#/components/schemas/Insect"
+            ai_comment:
+              type: string
+              description: Claude Haiku 4.5が生成したパーソナライズコメント
+              example: 挑戦する気持ちが強いあなたに、白くてまるっとしたシルクワームはいかがでしょう。クリーミーな味わいにきっと驚くはずです。
 
     Error:
       type: object
