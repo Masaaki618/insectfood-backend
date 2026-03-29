@@ -22,8 +22,13 @@ jobs:
       - name: 依存パッケージの整理と取得
         run: go mod tidy && go mod download
 
-      - name: パッケージ確認（デバッグ）
-        run: go list ./...
+      - name: 環境確認（デバッグ）
+        run: |
+          pwd
+          ls -la
+          ls -la cmd/ || echo "cmd/ なし"
+          go env GOPATH GOMODCACHE GOFLAGS
+          go list ./...
 
       - name: リント実行
         run: golangci-lint run ./...
