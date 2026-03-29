@@ -1,0 +1,20 @@
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  enable:
+    - govet        # Go標準の静的解析
+    - errcheck     # エラーの握りつぶし検出
+    - staticcheck  # 高精度な静的解析
+    - unused       # 未使用コードの検出
+    - misspell     # スペルミス検出
+    - noctx        # contextなしのHTTPリクエスト検出
+    - mnd          # マジックナンバーの検出
+  exclusions:
+    rules:
+      # テストファイルはerrcheckを緩める
+      - path: _test\.go
+        linters:
+          - errcheck
