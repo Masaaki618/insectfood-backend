@@ -98,7 +98,7 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 | 関数・メソッド  | UpperCamelCase（公開）/ lowerCamelCase（非公開） | `GetInsects`, `buildPrompt` |
 | 変数       | lowerCamelCase                          | `insectList`, `aiComment`   |
 | 定数       | UpperCamelCase または ALL_CAPS             | `MaxRetryCount`             |
-| インターフェース | `〜er` または `〜Interface`                  | `InsectRepository`          |
+| インターフェース | 先頭に `I` をつける                            | `IInsectRepository`         |
 | ファイル名    | スネークケース                                 | `insect_service.go`         |
 
 ### コメントの書き方
