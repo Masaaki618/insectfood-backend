@@ -39,28 +39,26 @@
 **レスポンス**
 
 ```json
-{
-  "data": [
-    {
-      "id": 1,
-      "name": "コオロギパウダー",
-      "difficulty": 1,
-      "introduction": "粉末状なので虫とわからない初心者向け",
-      "taste": "ナッツ系",
-      "texture": "サラサラ",
-      "insect_img": "https://example.com/images/cricket.png"
-    },
-    {
-      "id": 2,
-      "name": "ミールワーム",
-      "difficulty": 1,
-      "introduction": "小さくて食べやすい定番の昆虫食",
-      "taste": "淡白",
-      "texture": "サクサク",
-      "insect_img": "https://example.com/images/mealworm.png"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "name": "コオロギパウダー",
+    "difficulty": 1,
+    "introduction": "粉末状なので虫とわからない初心者向け",
+    "taste": "ナッツ系",
+    "texture": "サラサラ",
+    "insect_img": "https://example.com/images/cricket.png"
+  },
+  {
+    "id": 2,
+    "name": "ミールワーム",
+    "difficulty": 1,
+    "introduction": "小さくて食べやすい定番の昆虫食",
+    "taste": "淡白",
+    "texture": "サクサク",
+    "insect_img": "https://example.com/images/mealworm.png"
+  }
+]
 ```
 
 ---
@@ -80,22 +78,20 @@
 
 ```json
 {
-  "data": {
-    "id": 1,
-    "name": "コオロギパウダー",
-    "difficulty": 1,
-    "introduction": "粉末状なので虫とわからない初心者向け",
-    "taste": "ナッツ系",
-    "texture": "サラサラ",
-    "insect_img": "https://example.com/images/cricket.png",
-    "ai_comment": "ナッツ系の香ばしい風味が特徴のコオロギパウダー。粉末状なので虫の形が残らず、初めての方でも抵抗なく楽しめます。スムージーやお菓子に混ぜるだけで手軽にタンパク質を補給できますよ。",
-    "radar_chart": {
-      "umami_score": 3,
-      "bitter_score": 1,
-      "egu_score": 1,
-      "flavor_score": 4,
-      "kimo_score": 1
-    }
+  "id": 1,
+  "name": "コオロギパウダー",
+  "difficulty": 1,
+  "introduction": "粉末状なので虫とわからない初心者向け",
+  "taste": "ナッツ系",
+  "texture": "サラサラ",
+  "insect_img": "https://example.com/images/cricket.png",
+  "ai_comment": "ナッツ系の香ばしい風味が特徴のコオロギパウダー。粉末状なので虫の形が残らず、初めての方でも抵抗なく楽しめます。スムージーやお菓子に混ぜるだけで手軽にタンパク質を補給できますよ。",
+  "radar_chart": {
+    "umami_score": 3,
+    "bitter_score": 1,
+    "egu_score": 1,
+    "flavor_score": 4,
+    "kimo_score": 1
   }
 }
 ```
@@ -116,40 +112,38 @@
 **レスポンス**
 
 ```json
-{
-  "data": [
-    {
-      "id": 1,
-      "body": "虫が出てくる映像や画像を抵抗なく見られる",
-      "category": "visual"
-    },
-    {
-      "id": 3,
-      "body": "グロテスクな見た目のものでも食べ物なら挑戦できる",
-      "category": "visual"
-    },
-    {
-      "id": 5,
-      "body": "虫を手で触ったことがある",
-      "category": "physical"
-    },
-    {
-      "id": 7,
-      "body": "屋台などで正体不明の食べ物を食べたことがある",
-      "category": "physical"
-    },
-    {
-      "id": 9,
-      "body": "食べ物の見た目より味や栄養を優先できる",
-      "category": "mental"
-    },
-    {
-      "id": 11,
-      "body": "新しい食体験にワクワクする方だ",
-      "category": "mental"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "body": "虫が出てくる映像や画像を抵抗なく見られる",
+    "category": "visual"
+  },
+  {
+    "id": 3,
+    "body": "グロテスクな見た目のものでも食べ物なら挑戦できる",
+    "category": "visual"
+  },
+  {
+    "id": 5,
+    "body": "虫を手で触ったことがある",
+    "category": "physical"
+  },
+  {
+    "id": 7,
+    "body": "屋台などで正体不明の食べ物を食べたことがある",
+    "category": "physical"
+  },
+  {
+    "id": 9,
+    "body": "食べ物の見た目より味や栄養を優先できる",
+    "category": "mental"
+  },
+  {
+    "id": 11,
+    "body": "新しい食体験にワクワクする方だ",
+    "category": "mental"
+  }
+]
 ```
 
 ---
@@ -174,18 +168,16 @@
 
 ```json
 {
-  "data": {
-    "insect": {
-      "id": 3,
-      "name": "シルクワーム",
-      "difficulty": 2,
-      "introduction": "白くてまるっとした見た目で初心者向け",
-      "taste": "クリーミー",
-      "texture": "もちもち",
-      "insect_img": "https://example.com/images/silkworm.png"
-    },
-    "ai_comment": "見た目への耐性は高いあなたですが、まだ身体的には慎重派。白くてまるっとしたシルクワームならきっと挑戦しやすいはずです！"
-  }
+  "insect": {
+    "id": 3,
+    "name": "シルクワーム",
+    "difficulty": 2,
+    "introduction": "白くてまるっとした見た目で初心者向け",
+    "taste": "クリーミー",
+    "texture": "もちもち",
+    "insect_img": "https://example.com/images/silkworm.png"
+  },
+  "ai_comment": "見た目への耐性は高いあなたですが、まだ身体的には慎重派。白くてまるっとしたシルクワームならきっと挑戦しやすいはずです！"
 }
 ```
 
@@ -335,13 +327,11 @@
 
 ```json
 {
-  "data": {
-    "insect": {
-      "id": 1,
-      "name": "コオロギパウダー",
-      ...
-    },
-    "ai_comment": "まずは食べやすいコオロギパウダーから始めてみましょう！"
-  }
+  "insect": {
+    "id": 1,
+    "name": "コオロギパウダー",
+    ...
+  },
+  "ai_comment": "まずは食べやすいコオロギパウダーから始めてみましょう！"
 }
 ```

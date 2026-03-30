@@ -14,6 +14,6 @@ type DiagnosisScores struct {
 
 // DiagnosisResponse は診断APIのレスポンス
 type DiagnosisResponse struct {
-	Insect    InsectResponse `json:"insect"`
-	AIComment string         `json:"ai_comment"`
+	Insect  InsectResponse `json:"insect"`
+	AIComment string `json:"ai_comment"`
 }
