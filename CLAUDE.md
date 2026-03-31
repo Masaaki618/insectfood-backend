@@ -51,13 +51,10 @@ rdb/migrations/     # マイグレーションファイル（golang-migrate）
 ## 3. コミットメッセージのルール
 
 - **1行・日本語・シンプルに**書く
-- `Co-Authored-By` を末尾に付ける
 
 ```
 # フォーマット
 <動詞>: <変更内容の要約>
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ```
 
 ### 動詞の使い分け
@@ -76,8 +73,6 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 
 ```
 追加: 昆虫一覧取得APIの実装
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ```
 
 ---
