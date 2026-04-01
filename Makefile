@@ -14,7 +14,7 @@ migrate-down:
 
 # 初期データ投入
 seed:
-	docker compose exec -T db mysql -u$(DB_USER) -p$(DB_PASSWORD) $(DB_NAME) < rdb/seeds/seed.sql
+	docker compose exec -T db mysql -u$(DB_USER) -p$(DB_PASSWORD) --default-character-set=utf8mb4 $(DB_NAME) < rdb/seeds/seed.sql
 
 # Docker操作
 up:
