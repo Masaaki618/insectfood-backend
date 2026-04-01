@@ -62,11 +62,14 @@ func (s *insectService) GetInsectByID(ctx context.Context, insectID uint) (*dtos
 		return nil, fmt.Errorf("InsectService.GetRadarChartByInsectID: %w", err)
 	}
 
-	radarChartRes.UmamiScore = radarChart.UmamiScore
-	radarChartRes.BitterScore = radarChart.BitterScore
-	radarChartRes.EguScore = radarChart.EguScore
-	radarChartRes.FlavorScore = radarChart.FlavorScore
-	radarChartRes.KimoScore = radarChart.KimoScore
+	if radarChart != nil {
+		radarChartRes.UmamiScore = radarChart.UmamiScore
+		radarChartRes.BitterScore = radarChart.BitterScore
+		radarChartRes.EguScore = radarChart.EguScore
+		radarChartRes.FlavorScore = radarChart.FlavorScore
+		radarChartRes.KimoScore = radarChart.KimoScore
+	}
+
 
 	var response dtos.InsectDetailResponse
 	response.InsectResponse = insectRes

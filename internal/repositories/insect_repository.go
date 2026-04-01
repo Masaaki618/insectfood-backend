@@ -2,6 +2,7 @@ package repositories
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/Masaaki618/insectfood-backend/internal/models"
@@ -38,6 +39,9 @@ func (r *insectRepository) GetRadarChartByInsectID(ctx context.Context, insectID
 	var radarChart models.RadarChart
 	err := r.db.WithContext(ctx).Where("insect_id = ?", insectID).First(&radarChart).Error
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, nil
+		}
 		return nil, fmt.Errorf("GetRadarChartByInsectID: %w", err)
 	}
 	return &radarChart, nil
