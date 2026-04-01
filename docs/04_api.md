@@ -317,7 +317,6 @@
 ```json
 {
   "error": {
-    "code": 400,
     "message": "invalid score value"
   }
 }

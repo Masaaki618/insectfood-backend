@@ -226,9 +226,6 @@ components:
         error:
           type: object
           properties:
-            code:
-              type: integer
-              example: 400
             message:
               type: string
               example: invalid score value
