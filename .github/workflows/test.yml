@@ -1,0 +1,29 @@
+name: Go Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+          cache: true
+
+      - name: 依存パッケージの整理と取得
+        run: go mod tidy && go mod download
+
+      - name: ginkgoのインストール
+        run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
+
+      - name: テスト実行
+        run: ginkgo -r ./internal/...
+        env:
+          GOTOOLCHAIN: local
+          CGO_ENABLED: "0"
