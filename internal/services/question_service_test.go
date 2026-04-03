@@ -10,7 +10,6 @@ import (
 	"github.com/Masaaki618/insectfood-backend/internal/models"
 	"github.com/Masaaki618/insectfood-backend/internal/repositories/mock"
 	"github.com/Masaaki618/insectfood-backend/internal/services"
-	"github.com/onsi/gomega"
 )
 
 var _ = Describe("QuestionService", func() {
@@ -67,11 +66,11 @@ var _ = Describe("QuestionService", func() {
 				}, nil)
 				result, err := svc.GetQuestions(ctx)
 
-				Expect(err).To(gomega.BeNil())
-				Expect(result).To(gomega.HaveLen(6))
-				Expect(result[0].Category).To(gomega.Equal("visual"))
-				Expect(result[2].Category).To(gomega.Equal("physical"))
-				Expect(result[4].Category).To(gomega.Equal("mental")) //nolint:typecheck
+				Expect(err).To(BeNil())
+				Expect(result).To(HaveLen(6))
+				Expect(result[0].Category).To(Equal("visual"))
+				Expect(result[2].Category).To(Equal("physical"))
+				Expect(result[4].Category).To(Equal("mental")) //nolint:typecheck
 			})
 		})
 	})
