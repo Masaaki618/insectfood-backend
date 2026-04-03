@@ -21,12 +21,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Insect"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Insect"
         "500":
           $ref: "#/components/responses/InternalServerError"
 
@@ -47,10 +44,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    $ref: "#/components/schemas/InsectDetail"
+                $ref: "#/components/schemas/InsectDetail"
         "404":
           description: 昆虫が見つからない
           content:
@@ -70,12 +64,9 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Question"
+                type: array
+                items:
+                  $ref: "#/components/schemas/Question"
         "500":
           $ref: "#/components/responses/InternalServerError"
 
@@ -235,9 +226,6 @@ components:
         error:
           type: object
           properties:
-            code:
-              type: integer
-              example: 400
             message:
               type: string
               example: invalid score value

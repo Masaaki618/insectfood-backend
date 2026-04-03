@@ -131,15 +131,15 @@ lib/
 │       └── main.go             # サーバー起動
 │
 ├── internal/
-│   ├── router/
+│   ├── routers/
 │   │   └── router.go           # ルーティング定義
 │   │
-│   ├── controller/             # リクエスト/レスポンス処理
+│   ├── controllers/            # リクエスト/レスポンス処理
 │   │   ├── insect_controller.go
 │   │   ├── question_controller.go
 │   │   └── diagnosis_controller.go
 │   │
-│   ├── service/                # ビジネスロジック
+│   ├── services/               # ビジネスロジック
 │   │   ├── insect_service.go
 │   │   ├── insect_service_interface.go
 │   │   ├── question_service.go
@@ -147,18 +147,18 @@ lib/
 │   │   ├── diagnosis_service.go
 │   │   └── diagnosis_service_interface.go
 │   │
-│   ├── repository/             # DBアクセス
+│   ├── repositories/           # DBアクセス
 │   │   ├── insect_repository.go
 │   │   ├── insect_repository_interface.go
 │   │   ├── question_repository.go
 │   │   └── question_repository_interface.go
 │   │
-│   ├── model/                  # DBのモデル定義
+│   ├── models/                 # DBのモデル定義
 │   │   ├── insect.go
 │   │   ├── radar_chart.go
 │   │   └── question.go
 │   │
-│   ├── dto/                    # リクエスト/レスポンスの型定義
+│   ├── dtos/                   # リクエスト/レスポンスの型定義
 │   │   ├── insect_dto.go
 │   │   ├── question_dto.go
 │   │   └── diagnosis_dto.go
@@ -183,6 +183,7 @@ lib/
 |----------|-----------------------------|------------------------|
 | コンテナ管理   | Docker + docker-compose     | アプリ・DBをコンテナで管理         |
 | ホットリロード  | air                         | コード変更を検知して自動再起動        |
+| ORM        | GORM                        | DBアクセスをGoの構造体で管理        |
 | マイグレーション | golang-migrate（Makefileで管理） | up/downセットで管理・ロールバック可能 |
 | テスト実行    | ginkgo（Makefileで管理）         | 各層のユニットテスト実行           |
 

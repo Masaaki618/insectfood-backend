@@ -2,26 +2,32 @@ package main
 
 import (
 	"fmt"
-	"net/http"
 	"os"
 
+	"github.com/Masaaki618/insectfood-backend/internal/di"
+	"github.com/Masaaki618/insectfood-backend/internal/infrastructure/database"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
-	r := gin.Default()
+	// DB接続
+	db, err := database.NewDB()
+	if err != nil {
+		panic(err)
+	}
 
-	// ヘルスチェック用（後でissue #4で正式実装）
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "ok"})
-	})
+	// 依存関係の組み立て
+	router := di.NewContainer(db)
+
+	// Ginエンジンの起動
+	engine := gin.Default()
+	router.Setup(engine)
 
 	port := os.Getenv("SERVER_PORT")
 	if port == "" {
 		port = "8080"
 	}
-
-	if err := r.Run(fmt.Sprintf(":%s", port)); err != nil {
+	if err := engine.Run(fmt.Sprintf(":%s", port)); err != nil {
 		panic(err)
 	}
 }

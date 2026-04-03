@@ -36,12 +36,12 @@ Router → Controller → Service → Repository → DB
 
 ```
 internal/
-├── router/         # ルーティング定義
-├── controller/     # リクエスト/レスポンス処理
-├── service/        # ビジネスロジック + Claude API呼び出し
-├── repository/     # DBアクセス
-├── model/          # DBモデル定義
-├── dto/            # リクエスト/レスポンスの型定義
+├── routers/        # ルーティング定義
+├── controllers/    # リクエスト/レスポンス処理
+├── services/       # ビジネスロジック + Claude API呼び出し
+├── repositories/   # DBアクセス
+├── models/         # DBモデル定義
+├── dtos/           # リクエスト/レスポンスの型定義
 └── infrastructure/ # DB接続・Claude APIクライアント
 rdb/migrations/     # マイグレーションファイル（golang-migrate）
 ```
@@ -51,13 +51,10 @@ rdb/migrations/     # マイグレーションファイル（golang-migrate）
 ## 3. コミットメッセージのルール
 
 - **1行・日本語・シンプルに**書く
-- `Co-Authored-By` を末尾に付ける
 
 ```
 # フォーマット
 <動詞>: <変更内容の要約>
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ```
 
 ### 動詞の使い分け
@@ -76,8 +73,6 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 
 ```
 追加: 昆虫一覧取得APIの実装
-
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 ```
 
 ---
@@ -98,7 +93,7 @@ Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
 | 関数・メソッド  | UpperCamelCase（公開）/ lowerCamelCase（非公開） | `GetInsects`, `buildPrompt` |
 | 変数       | lowerCamelCase                          | `insectList`, `aiComment`   |
 | 定数       | UpperCamelCase または ALL_CAPS             | `MaxRetryCount`             |
-| インターフェース | `〜er` または `〜Interface`                  | `InsectRepository`          |
+| インターフェース | 先頭に `I` をつける                            | `IInsectRepository`         |
 | ファイル名    | スネークケース                                 | `insect_service.go`         |
 
 ### コメントの書き方
@@ -144,12 +139,11 @@ return nil, fmt.Errorf("GetInsects: %w", err)
 設計書（`docs/04_api.md`）のフォーマットに必ず従う。
 
 ```json
-// 正常レスポンス
-{
-  "data": {
-    ...
-  }
-}
+// 正常レスポンス（配列）
+[{ ... }, { ... }]
+
+// 正常レスポンス（オブジェクト）
+{ ... }
 
 // エラーレスポンス
 {
