@@ -1,6 +1,8 @@
 package routers
 
 import (
+	"net/http"
+
 	"github.com/Masaaki618/insectfood-backend/internal/controllers"
 	"github.com/gin-gonic/gin"
 )
@@ -30,4 +32,7 @@ func (r *Router) Setup(engine *gin.Engine) {
 		v1.GET("/questions", r.questionController.GetQuestions)
 		v1.POST("/diagnosis", r.diagnosisController.Diagnose)
 	}
+	engine.GET("/health", func(ctx *gin.Context) {
+		ctx.JSON(http.StatusOK, gin.H{"status": "ok"})
+	})
 }
