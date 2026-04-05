@@ -2,6 +2,7 @@ package services_test
 
 import (
 	"context"
+	"fmt"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -43,6 +44,25 @@ var _ = Describe("InsectService", func() {
 				Expect(err).To(BeNil())
 				Expect(result).To(HaveLen(1))
 				Expect(result[0].Name).To(Equal("コオロギ"))
+			})
+		})
+
+		Context("DBに昆虫が0件の場合", func() {
+			It("空のスライスを返す (エラーにはならない)", func() {
+				mockRepo.EXPECT().GetInsects(ctx).Return([]models.Insect{}, nil)
+				result, err := svc.GetInsects(ctx)
+				Expect(err).To(BeNil())
+				Expect(result).To(BeEmpty())
+			})
+		})
+
+		Context("DBエラーが発生した場合", func() {
+			It("エラーをラップして返す", func() {
+				mockRepo.EXPECT().GetInsects(ctx).Return(nil, fmt.Errorf("db error"))
+				result, err := svc.GetInsects(ctx)
+				Expect(err).To(HaveOccurred())
+				Expect(err.Error()).To(ContainSubstring("InsectService.GetInsects"))
+				Expect(result).To(BeNil())
 			})
 		})
 	})
