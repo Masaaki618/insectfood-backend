@@ -18,7 +18,7 @@ seed:
 
 # Docker操作
 up:
-	docker compose up -d
+	docker compose up
 
 down:
 	docker compose down
