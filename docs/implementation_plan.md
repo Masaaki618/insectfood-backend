@@ -90,9 +90,9 @@
 **ラベル**: `backend`
 **AC**:
 - [ ] `make test` で `insect_service_test.go` のテストがすべて通る（Green）
-- [ ] `GET /api/v1/insects` が `{"data": [...]}` 形式で全昆虫を返す
+- [ ] `GET /api/v1/insects` が配列形式 `[...]` で全昆虫を返す
 - [ ] `docs/04_api.md` のレスポンス形式と一致している
-- [ ] DBに昆虫データが0件のとき `{"data": []}` を返す（500にならない）
+- [ ] DBに昆虫データが0件のとき空配列 `[]` を返す（500にならない）
 - [ ] Controller / Service / Repository がインターフェースを介して依存している
 
 ### Issue #6: 昆虫詳細API（GET /api/v1/insects/:id）を実装する ※TDD
