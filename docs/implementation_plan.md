@@ -89,11 +89,11 @@
 **依存**: #4
 **ラベル**: `backend`
 **AC**:
-- [ ] `make test` で `insect_service_test.go` のテストがすべて通る（Green）
-- [ ] `GET /api/v1/insects` が配列形式 `[...]` で全昆虫を返す
-- [ ] `docs/04_api.md` のレスポンス形式と一致している
-- [ ] DBに昆虫データが0件のとき空配列 `[]` を返す（500にならない）
-- [ ] Controller / Service / Repository がインターフェースを介して依存している
+- [x] `make test` で `insect_service_test.go` のテストがすべて通る（Green）
+- [x] `GET /api/v1/insects` が配列形式 `[...]` で全昆虫を返す
+- [x] `docs/04_api.md` のレスポンス形式と一致している
+- [x] DBに昆虫データが0件のとき空配列 `[]` を返す（500にならない）
+- [x] Controller / Service / Repository がインターフェースを介して依存している
 
 ### Issue #6: 昆虫詳細API（GET /api/v1/insects/:id）を実装する ※TDD
 **概要**: TDDで実装。Claude APIのmock（#9で生成済み）を使い、AI連携を含むテストを先に書いてから実装する。
