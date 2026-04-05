@@ -46,43 +46,43 @@
 **依存**: -
 **ラベル**: `infra`, `backend`
 **AC**:
-- [ ] `docker compose up` で Go アプリと MySQL が起動する
-- [ ] `http://localhost:8080` にアクセスして何らかのレスポンスが返る
-- [ ] air によるホットリロードが動作する（ファイル変更 → 自動再起動）
-- [ ] `.env.example` に必要な環境変数のキーを列挙している
-- [ ] `README.md` にローカル起動手順を記載している
+- [x] `docker compose up` で Go アプリと MySQL が起動する
+- [x] `http://localhost:8080` にアクセスして何らかのレスポンスが返る
+- [x] air によるホットリロードが動作する（ファイル変更 → 自動再起動）
+- [x] `.env.example` に必要な環境変数のキーを列挙している
+- [x] `README.md` にローカル起動手順を記載している
 
 ### Issue #2: DBマイグレーション基盤を構築する
 **概要**: golang-migrate を導入し、3テーブル（insects / radar_charts / questions）の作成マイグレーションを実装する。
 **依存**: #1
 **ラベル**: `backend`, `database`
 **AC**:
-- [ ] `make migrate-up` で3テーブルが作成される
-- [ ] `make migrate-down` で3テーブルがロールバックされる
-- [ ] up / down ファイルがセットで `rdb/migrations/` に存在する
-- [ ] `docs/03_database.md` のカラム定義・コメントと一致している
-- [ ] 初期データ（昆虫10種・質問12問）を投入する seed ファイルまたは SQL が存在する
+- [x] `make migrate-up` で3テーブルが作成される
+- [x] `make migrate-down` で3テーブルがロールバックされる
+- [x] up / down ファイルがセットで `rdb/migrations/` に存在する
+- [x] `docs/03_database.md` のカラム定義・コメントと一致している
+- [x] 初期データ（昆虫10種・質問12問）を投入する seed ファイルまたは SQL が存在する
 
 ### Issue #3: Goプロジェクトの骨格を実装する（Ginkgo/gomockセットアップ含む）
 **概要**: 三層アーキテクチャの空実装とインターフェースを作成し、TDDで使うGinkgo / gomockのセットアップも完結させる。
 **依存**: #1
 **ラベル**: `backend`
 **AC**:
-- [ ] `docs/02_architecture.md` のフォルダ構成通りにディレクトリ・ファイルが存在する
-- [ ] 各層のインターフェースファイルが別ファイルで定義されている
-- [ ] `internal/infrastructure/database/db.go` でDB接続が確立できる
-- [ ] `main.go` から Router を経由して Gin が起動する
-- [ ] `make test` を実行するとテストスイートが（0件でも）エラーなく起動する
-- [ ] `go build` / `go vet` がエラーなく通る
+- [x] `docs/02_architecture.md` のフォルダ構成通りにディレクトリ・ファイルが存在する
+- [x] 各層のインターフェースファイルが別ファイルで定義されている
+- [x] `internal/infrastructure/database/db.go` でDB接続が確立できる
+- [x] `main.go` から Router を経由して Gin が起動する
+- [x] `make test` を実行するとテストスイートが（0件でも）エラーなく起動する
+- [x] `go build` / `go vet` がエラーなく通る
 
 ### Issue #4: ヘルスチェックAPIを実装する
 **概要**: `GET /health` でサーバーとDB接続の生存確認ができるエンドポイントを実装する。Walking Skeleton の完成形。
 **依存**: #3
 **ラベル**: `backend`
 **AC**:
-- [ ] `GET /health` が `{"status": "ok"}` を返す
-- [ ] DB接続が切れている場合は `503` を返す
-- [ ] curl / Postman で動作確認できる
+- [x] `GET /health` が `{"status": "ok"}` を返す
+- [x] DB接続が切れている場合は `503` を返す
+- [x] curl / Postman で動作確認できる
 
 ### Issue #5: 昆虫一覧API（GET /api/v1/insects）を実装する ※TDD
 **概要**: TDDで進める最初のAPI実装。テストを先に書き（Red）、実装（Green）、整理（Refactor）の順で進める。以降のAPI実装の雛形となる。
