@@ -23,7 +23,7 @@ func (s *insectService) GetInsects(ctx context.Context) ([]dtos.InsectResponse, 
 	if err != nil {
 		return nil, fmt.Errorf("InsectService.GetInsects: %w", err)
 	}
-	var response []dtos.InsectResponse
+	response := []dtos.InsectResponse{}
 	for _, insect := range insects {
 		response = append(response, dtos.InsectResponse{
 			ID:           insect.ID,
