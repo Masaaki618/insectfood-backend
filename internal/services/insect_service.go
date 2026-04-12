@@ -5,16 +5,18 @@ import (
 	"fmt"
 
 	"github.com/Masaaki618/insectfood-backend/internal/dtos"
+	"github.com/Masaaki618/insectfood-backend/internal/infrastructure/ai"
 	"github.com/Masaaki618/insectfood-backend/internal/repositories"
 )
 
 type insectService struct {
 	repository repositories.IInsectRepository
+	claude     ai.IClaudeClient
 }
 
 // NewInsectService はIInsectServiceを生成する
-func NewInsectService(repository repositories.IInsectRepository) IInsectService {
-	return &insectService{repository: repository}
+func NewInsectService(repository repositories.IInsectRepository, claude ai.IClaudeClient) IInsectService {
+	return &insectService{repository: repository, claude: claude}
 }
 
 // GetInsects は昆虫の一覧を取得しDTOに詰め替えて返す
@@ -70,10 +72,14 @@ func (s *insectService) GetInsectByID(ctx context.Context, insectID uint) (*dtos
 		radarChartRes.KimoScore = radarChart.KimoScore
 	}
 
-
+	aiComment, err := s.claude.GenerateInsectComment(ctx, insect)
+	if err != nil {
+		return nil, fmt.Errorf("InsectService.GenerateInsectComment: %w", err)
+	}
 	var response dtos.InsectDetailResponse
 	response.InsectResponse = insectRes
 	response.RadarChart = radarChartRes
+	response.AIComment = aiComment
 
 	return &response, nil
 }
