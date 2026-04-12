@@ -34,6 +34,7 @@ test:
 mock:
 	mockgen -source=internal/repositories/insect_repository_interface.go -destination=internal/repositories/mock/mock_insect_repository.go -package=mock
 	mockgen -source=internal/repositories/question_repository_interface.go -destination=internal/repositories/mock/mock_question_repository.go -package=mock
+	mockgen -source=internal/infrastructure/ai/claude_client_interface.go -destination=internal/infrastructure/ai/mock/mock_claude_client.go -package=mock
 
 # Lint実行
 lint:
