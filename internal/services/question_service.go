@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/Masaaki618/insectfood-backend/internal/dtos"
@@ -9,7 +10,8 @@ import (
 	"github.com/Masaaki618/insectfood-backend/internal/repositories"
 )
 
-const questionsPerCategory = 2 // パッケージ内のみ使用
+const QuestionsPerCategory = 2 // パッケージ内のみ使用
+var ErrInsufficientQuestions = errors.New("insufficient questions")
 
 type questionService struct {
 	repository repositories.IQuestionRepository
@@ -23,9 +25,12 @@ func NewQuestionService(repository repositories.IQuestionRepository) IQuestionSe
 // GetQuestions はカテゴリ別にランダムで6問取得しDTOに詰め替えて返す
 func (s *questionService) GetQuestions(ctx context.Context) ([]dtos.QuestionResponse, error) {
 	var questionsRes []dtos.QuestionResponse
-	visualQuestions, err := s.repository.GetRandomQuestionsByCategory(ctx, models.CategoryVisual, questionsPerCategory)
+	visualQuestions, err := s.repository.GetRandomQuestionsByCategory(ctx, models.CategoryVisual, QuestionsPerCategory)
 	if err != nil {
 		return nil, fmt.Errorf("QuestionService.GetQuestions visual: %w", err)
+	}
+	if len(visualQuestions) < QuestionsPerCategory {
+		return nil, ErrInsufficientQuestions
 	}
 
 	for _, visualQuestion := range visualQuestions {
@@ -36,9 +41,12 @@ func (s *questionService) GetQuestions(ctx context.Context) ([]dtos.QuestionResp
 		})
 	}
 
-	physicalQuestions, err := s.repository.GetRandomQuestionsByCategory(ctx, models.CategoryPhysical, questionsPerCategory)
+	physicalQuestions, err := s.repository.GetRandomQuestionsByCategory(ctx, models.CategoryPhysical, QuestionsPerCategory)
 	if err != nil {
 		return nil, fmt.Errorf("QuestionService.GetQuestions physical: %w", err)
+	}
+	if len(physicalQuestions) < QuestionsPerCategory {
+		return nil, ErrInsufficientQuestions
 	}
 
 	for _, physicalQuestion := range physicalQuestions {
@@ -48,10 +56,14 @@ func (s *questionService) GetQuestions(ctx context.Context) ([]dtos.QuestionResp
 			Category: string(physicalQuestion.Category),
 		})
 	}
-	mentalQuestions, err := s.repository.GetRandomQuestionsByCategory(ctx, models.CategoryMental, questionsPerCategory)
+	mentalQuestions, err := s.repository.GetRandomQuestionsByCategory(ctx, models.CategoryMental, QuestionsPerCategory)
 	if err != nil {
 		return nil, fmt.Errorf("QuestionService.GetQuestions mental: %w", err)
 	}
+	if len(mentalQuestions) < QuestionsPerCategory {
+		return nil, ErrInsufficientQuestions
+	}
+
 	for _, mentalQuestion := range mentalQuestions {
 		questionsRes = append(questionsRes, dtos.QuestionResponse{
 			ID:       mentalQuestion.ID,
