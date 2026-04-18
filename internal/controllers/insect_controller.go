@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 
@@ -47,6 +48,14 @@ func (c *InsectController) GetInsectByID(ctx *gin.Context) {
 	}
 	insect, err := c.service.GetInsectByID(ctx.Request.Context(), uint(id))
 	if err != nil {
+		if errors.Is(err, services.ErrNotFound) {
+			ctx.JSON(http.StatusNotFound, dtos.ErrorResponse{
+				Error: dtos.ErrorDetail{
+					Message: "insect not found",
+				},
+			})
+			return
+		}
 		ctx.JSON(http.StatusInternalServerError, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
 				Message: "internal server error",
