@@ -2,6 +2,7 @@ package services_test
 
 import (
 	"context"
+	"errors"
 
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -34,7 +35,7 @@ var _ = Describe("QuestionService", func() {
 	Describe("GetQuestions", func() {
 		Context("全カテゴリのデータが存在する場合", func() {
 			It("3カテゴリ合計6件の質問を返す", func() {
-				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryVisual, 2).Return([]models.Question{
+				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryVisual, services.QuestionsPerCategory).Return([]models.Question{
 					{
 						Body:     "visual",
 						Category: models.CategoryVisual,
@@ -44,7 +45,7 @@ var _ = Describe("QuestionService", func() {
 						Category: models.CategoryVisual,
 					},
 				}, nil)
-				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryPhysical, 2).Return([]models.Question{
+				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryPhysical, services.QuestionsPerCategory).Return([]models.Question{
 					{
 						Body:     "physical",
 						Category: models.CategoryPhysical,
@@ -54,7 +55,7 @@ var _ = Describe("QuestionService", func() {
 						Category: models.CategoryPhysical,
 					},
 				}, nil)
-				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryMental, 2).Return([]models.Question{
+				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryMental, services.QuestionsPerCategory).Return([]models.Question{
 					{
 						Body:     "mental",
 						Category: models.CategoryMental,
@@ -71,6 +72,20 @@ var _ = Describe("QuestionService", func() {
 				Expect(result[0].Category).To(Equal("visual"))
 				Expect(result[2].Category).To(Equal("physical"))
 				Expect(result[4].Category).To(Equal("mental")) //nolint:typecheck
+			})
+
+			It("質問数が2問未満の場合エラーを返す", func() {
+				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryVisual, services.QuestionsPerCategory).Return([]models.Question{
+					{
+						Body:     "visual",
+						Category: models.CategoryVisual,
+					},
+				}, nil)
+
+				result, err := svc.GetQuestions(ctx)
+
+				Expect(errors.Is(err, services.ErrInsufficientQuestions)).To(BeTrue())
+				Expect(result).To(BeNil())
 			})
 		})
 	})
