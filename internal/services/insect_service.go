@@ -2,12 +2,16 @@ package services
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	"github.com/Masaaki618/insectfood-backend/internal/dtos"
 	"github.com/Masaaki618/insectfood-backend/internal/infrastructure/ai"
 	"github.com/Masaaki618/insectfood-backend/internal/repositories"
+	"gorm.io/gorm"
 )
+
+var ErrNotFound = errors.New("not found")
 
 type insectService struct {
 	repository repositories.IInsectRepository
@@ -45,6 +49,9 @@ func (s *insectService) GetInsects(ctx context.Context) ([]dtos.InsectResponse, 
 func (s *insectService) GetInsectByID(ctx context.Context, insectID uint) (*dtos.InsectDetailResponse, error) {
 	insect, err := s.repository.GetInsectByID(ctx, insectID)
 	if err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrNotFound
+		}
 		return nil, fmt.Errorf("InsectService.GetInsectByID: %w", err)
 	}
 
@@ -74,7 +81,7 @@ func (s *insectService) GetInsectByID(ctx context.Context, insectID uint) (*dtos
 
 	aiComment, err := s.claude.GenerateInsectComment(ctx, insect)
 	if err != nil {
-		return nil, fmt.Errorf("InsectService.GenerateInsectComment: %w", err)
+		aiComment = fmt.Sprintf("まずは%sから始めてみましょう！", insect.Name)
 	}
 	var response dtos.InsectDetailResponse
 	response.InsectResponse = insectRes
