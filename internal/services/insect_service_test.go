@@ -2,6 +2,7 @@ package services_test
 
 import (
 	"context"
+	"errors"
 	"fmt"
 
 	. "github.com/onsi/ginkgo/v2"
@@ -78,12 +79,12 @@ var _ = Describe("InsectService", func() {
 				Model: gorm.Model{ID: 1},
 				Name:  "コオロギ", Difficulty: 1,
 			}
-			mockRepo.EXPECT().GetInsectByID(ctx, insect.ID).Return(&insect, nil)
-			mockRepo.EXPECT().GetRadarChartByInsectID(ctx, uint(1)).Return(nil, nil)
 		})
 
 		Context("DBに昆虫が存在する場合", func() {
 			It("昆虫詳細のDTOを返す", func() {
+				mockRepo.EXPECT().GetInsectByID(ctx, insect.ID).Return(&insect, nil)
+				mockRepo.EXPECT().GetRadarChartByInsectID(ctx, uint(1)).Return(nil, nil)
 				mockClaude.EXPECT().GenerateInsectComment(ctx, &insect).Return("テストコメント", nil)
 
 				result, err := svc.GetInsectByID(ctx, 1)
@@ -94,13 +95,24 @@ var _ = Describe("InsectService", func() {
 			})
 		})
 
-		Context("Claude APIが3回失敗した場合", func() {
-			It("エラーを返す", func() {
+		Context("DBに昆虫が存在しない場合", func() {
+			It("404エラーを返す", func() {
+				mockRepo.EXPECT().GetInsectByID(ctx, uint(2)).Return(nil, gorm.ErrRecordNotFound)
+				result, err := svc.GetInsectByID(ctx, 2)
+				Expect(errors.Is(err, services.ErrNotFound)).To(BeTrue())
+				Expect(result).To(BeNil())
+			})
+		})
+
+		Context("Claude APIが失敗した場合", func() {
+			It("デフォルトコメントを返す", func() {
+				mockRepo.EXPECT().GetInsectByID(ctx, insect.ID).Return(&insect, nil)
+				mockRepo.EXPECT().GetRadarChartByInsectID(ctx, uint(1)).Return(nil, nil)
 				mockClaude.EXPECT().GenerateInsectComment(ctx, &insect).Return("", fmt.Errorf("api error"))
 				result, err := svc.GetInsectByID(ctx, 1)
 
-				Expect(err).To(HaveOccurred())
-				Expect(result).To(BeNil())
+				Expect(err).To(BeNil())
+				Expect(result.AIComment).To(Equal(fmt.Sprintf("まずは%sから始めてみましょう！", insect.Name)))
 			})
 		})
 	})
