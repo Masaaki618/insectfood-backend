@@ -35,7 +35,7 @@ func (s *diagnosisService) Diagnose(ctx context.Context, req dtos.DiagnosisReque
 	)
 
 	if err != nil {
-		return nil, fmt.Errorf("diagnosisService.Diagnose: %w", err)
+		aiComment = fmt.Sprintf("まずは%sから始めてみよう!", insects[0].Name)
 	}
 
 	var insectRes dtos.InsectResponse
