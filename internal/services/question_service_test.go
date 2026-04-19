@@ -34,7 +34,7 @@ var _ = Describe("QuestionService", func() {
 
 	Describe("GetQuestions", func() {
 		Context("全カテゴリのデータが存在する場合", func() {
-			It("3カテゴリ合計6件の質問を返す", func() {
+			It("3カテゴリ合計6件の質問を返すこと", func() {
 				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryVisual, services.QuestionsPerCategory).Return([]models.Question{
 					{
 						Body:     "visual",
@@ -74,7 +74,7 @@ var _ = Describe("QuestionService", func() {
 				Expect(result[4].Category).To(Equal("mental")) //nolint:typecheck
 			})
 
-			It("質問数が2問未満の場合エラーを返す", func() {
+			It("質問数が2問未満の場合エラーを返すこと", func() {
 				mockRepo.EXPECT().GetRandomQuestionsByCategory(ctx, models.CategoryVisual, services.QuestionsPerCategory).Return([]models.Question{
 					{
 						Body:     "visual",

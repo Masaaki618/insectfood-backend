@@ -55,7 +55,7 @@ var _ = Describe("DiagnosisService", func() {
 			}
 		})
 		Context("正常系", func() {
-			It("診断結果のDTOを返す", func() {
+			It("診断結果のDTOを返すこと", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return(insects, nil)
 				mockClaude.EXPECT().GenerateDiagnosisResult(ctx, req.Scores.Visual, req.Scores.Physical, req.Scores.Mental, insects).Return(uint(1), "コメント", nil)
 
@@ -68,7 +68,7 @@ var _ = Describe("DiagnosisService", func() {
 		})
 
 		Context("Claude APIが失敗した場合", func() {
-			It("デフォルトの診断結果を返す", func() {
+			It("デフォルトの診断結果を返すこと", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return(insects, nil)
 				mockClaude.EXPECT().GenerateDiagnosisResult(ctx, req.Scores.Visual, req.Scores.Physical, req.Scores.Mental, insects).Return(uint(0), "", fmt.Errorf("GenerateDiagnosisResult JSONパース失敗"))
 
@@ -79,7 +79,7 @@ var _ = Describe("DiagnosisService", func() {
 		})
 
 		Context("DBエラーが発生した時に", func() {
-			It("エラーを返す", func() {
+			It("エラーを返すこと", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return(insects, fmt.Errorf("db error"))
 				res, err := svc.Diagnose(ctx, req)
 				Expect(err.Error()).To(ContainSubstring("diagnosisService.Diagnose"))

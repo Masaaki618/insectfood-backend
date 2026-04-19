@@ -39,7 +39,7 @@ var _ = Describe("InsectService", func() {
 
 	Describe("GetInsects", func() {
 		Context("DBに昆虫が存在する場合", func() {
-			It("昆虫一覧のDTOを返す", func() {
+			It("昆虫一覧のDTOを返すこと", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return([]models.Insect{
 					{Name: "コオロギ", Difficulty: 1},
 				}, nil)
@@ -53,7 +53,7 @@ var _ = Describe("InsectService", func() {
 		})
 
 		Context("DBに昆虫が0件の場合", func() {
-			It("空のスライスを返す (エラーにはならない)", func() {
+			It("空のスライスを返すこと（エラーにはならない）", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return([]models.Insect{}, nil)
 				result, err := svc.GetInsects(ctx)
 				Expect(err).To(BeNil())
@@ -62,7 +62,7 @@ var _ = Describe("InsectService", func() {
 		})
 
 		Context("DBエラーが発生した場合", func() {
-			It("エラーをラップして返す", func() {
+			It("エラーをラップして返すこと", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return(nil, fmt.Errorf("db error"))
 				result, err := svc.GetInsects(ctx)
 				Expect(err).To(HaveOccurred())
@@ -82,7 +82,7 @@ var _ = Describe("InsectService", func() {
 		})
 
 		Context("DBに昆虫が存在する場合", func() {
-			It("昆虫詳細のDTOを返す", func() {
+			It("昆虫詳細のDTOを返すこと", func() {
 				mockRepo.EXPECT().GetInsectByID(ctx, insect.ID).Return(&insect, nil)
 				mockRepo.EXPECT().GetRadarChartByInsectID(ctx, uint(1)).Return(nil, nil)
 				mockClaude.EXPECT().GenerateInsectComment(ctx, &insect).Return("テストコメント", nil)
@@ -96,7 +96,7 @@ var _ = Describe("InsectService", func() {
 		})
 
 		Context("DBに昆虫が存在しない場合", func() {
-			It("404エラーを返す", func() {
+			It("404エラーを返すこと", func() {
 				mockRepo.EXPECT().GetInsectByID(ctx, uint(2)).Return(nil, gorm.ErrRecordNotFound)
 				result, err := svc.GetInsectByID(ctx, 2)
 				Expect(errors.Is(err, services.ErrNotFound)).To(BeTrue())
@@ -105,7 +105,7 @@ var _ = Describe("InsectService", func() {
 		})
 
 		Context("Claude APIが失敗した場合", func() {
-			It("デフォルトコメントを返す", func() {
+			It("デフォルトコメントを返すこと", func() {
 				mockRepo.EXPECT().GetInsectByID(ctx, insect.ID).Return(&insect, nil)
 				mockRepo.EXPECT().GetRadarChartByInsectID(ctx, uint(1)).Return(nil, nil)
 				mockClaude.EXPECT().GenerateInsectComment(ctx, &insect).Return("", fmt.Errorf("api error"))
