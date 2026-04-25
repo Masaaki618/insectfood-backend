@@ -35,8 +35,16 @@ cp .env.example .env
 ### 2. 起動
 
 ```bash
-docker compose up
+make up
 ```
+
+Claude APIを叩かずにモックコメントを返すモードで起動する場合：
+
+```bash
+make up-mock
+```
+
+> `make up-mock` はトークンを消費しないため、開発・動作確認時に便利。
 
 ### 3. 動作確認
 
