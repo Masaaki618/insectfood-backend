@@ -20,6 +20,10 @@ seed:
 up:
 	docker compose up
 
+# モックAIモードで起動（Claude APIを叩かない）
+up-mock:
+	USE_MOCK_AI=true docker compose up
+
 down:
 	docker compose down
 
