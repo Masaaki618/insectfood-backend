@@ -102,6 +102,11 @@ func (c *ClaudeClient) buildDiagnosisResultPrompt(visual, physical, mental uint8
 
 // GenerateInsectComment は昆虫情報をもとにAIコメントを生成して返す
 func (c *ClaudeClient) GenerateInsectComment(ctx context.Context, insect *models.Insect) (string, error) {
+	// USE_MOCK_AI=true のときはClaude APIを叩かずに固定コメントを返す
+	if os.Getenv("USE_MOCK_AI") == "true" {
+		return fmt.Sprintf("【モック】%sはクセが少なく初心者にもおすすめの昆虫食です。ぜひ試してみてください！", insect.Name), nil
+	}
+
 	prompt := c.buildInsectCommentPrompt(insect)
 
 	// APIを呼ぶ（最大3回リトライ）
@@ -122,6 +127,11 @@ func (c *ClaudeClient) GenerateInsectComment(ctx context.Context, insect *models
 
 // GenerateDiagnosisResult はスコアと昆虫リストをもとにAIがおすすめ昆虫IDとコメントを返す
 func (c *ClaudeClient) GenerateDiagnosisResult(ctx context.Context, visual, physical, mental uint8, insects []models.Insect) (uint, string, error) {
+	// USE_MOCK_AI=true のときはClaude APIを叩かずに固定結果を返す
+	if os.Getenv("USE_MOCK_AI") == "true" {
+		return insects[0].ID, fmt.Sprintf("【モック】%sがあなたにおすすめです。まずはここから昆虫食を始めてみましょう！", insects[0].Name), nil
+	}
+
 	prompt := c.buildDiagnosisResultPrompt(visual, physical, mental, insects)
 
 	// APIを呼ぶ（最大3回リトライ）
