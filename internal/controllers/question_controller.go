@@ -24,6 +24,7 @@ func (c *QuestionController) GetQuestions(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
+				Code:    http.StatusInternalServerError,
 				Message: "internal server error",
 			},
 		})

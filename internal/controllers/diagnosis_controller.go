@@ -24,6 +24,7 @@ func (c *DiagnosisController) Diagnose(ctx *gin.Context) {
 	if err := ctx.ShouldBind(&diagnosisRequest); err != nil {
 		ctx.JSON(http.StatusBadRequest, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
+				Code:    http.StatusBadRequest,
 				Message: "invalid request",
 			},
 		})
@@ -34,6 +35,7 @@ func (c *DiagnosisController) Diagnose(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
+				Code:    http.StatusInternalServerError,
 				Message: "internal server error",
 			},
 		})
