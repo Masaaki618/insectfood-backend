@@ -4,7 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
+	"strings"
 
 	"github.com/Masaaki618/insectfood-backend/internal/models"
 	"github.com/anthropics/anthropic-sdk-go"
@@ -73,7 +75,7 @@ func (c *ClaudeClient) buildDiagnosisResultPrompt(visual, physical, mental uint8
 	insectsJSON, _ := json.Marshal(insects)
 	return fmt.Sprintf(`あなたは昆虫食のアドバイザーです。
 
-		重要：コードブロック（` + "```" + `）は絶対に使わないこと。JSONのみを生のテキストで出力すること。
+		重要：コードブロック（`+"```"+`）は絶対に使わないこテで力ると
 
 		以下のルールを必ず守ってください：
 		- 出力はJSON形式のみ。前後に説明文・マークダウン・コードブロックを一切つけない
@@ -147,14 +149,26 @@ func (c *ClaudeClient) GenerateDiagnosisResult(ctx context.Context, visual, phys
 		return 0, "", fmt.Errorf("GenerateDiagnosisResult: %w", err)
 	}
 
+	log.Printf("[Claude API] レスポンス: %s", result)
+
+	// コードブロックで囲まれている場合は除去する
+	result = strings.TrimSpace(result)
+	result = strings.TrimPrefix(result, "```json")
+	result = strings.TrimPrefix(result, "```")
+	result = strings.TrimSuffix(result, "```")
+	result = strings.TrimSpace(result)
+
 	// JSONをパースして insect_id と ai_comment を取り出す
 	var parsed struct {
 		InsectID  uint   `json:"insect_id"`
 		AIComment string `json:"ai_comment"`
 	}
 	if err := json.Unmarshal([]byte(result), &parsed); err != nil {
+		log.Printf("[Claude API] JSONパース失敗: %v, raw: %s", err, result)
 		return 0, "", fmt.Errorf("GenerateDiagnosisResult JSONパース失敗: %w", err)
 	}
+
+	log.Printf("[Claude API] パース結果: insect_id=%d, ai_comment=%s", parsed.InsectID, parsed.AIComment)
 
 	return parsed.InsectID, parsed.AIComment, nil
 }
