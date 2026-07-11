@@ -115,5 +115,19 @@ var _ = Describe("InsectService", func() {
 				Expect(result.AIComment).To(Equal(fmt.Sprintf("まずは%sから始めてみましょう！", insect.Name)))
 			})
 		})
+
+		Context("Claude APIが1回目失敗・2回目成功した場合", func() {
+			It("正常なコメントを返すこと", func() {
+				mockRepo.EXPECT().GetInsectByID(ctx, insect.ID).Return(&insect, nil)
+				mockRepo.EXPECT().GetRadarChartByInsectID(ctx, uint(1)).Return(nil, nil)
+				// Service層ではリトライはClaude APIクライアント内部で行われるため
+				// mockは最終的な成功レスポンスを返す（リトライ後の成功を表す）
+				mockClaude.EXPECT().GenerateInsectComment(ctx, &insect).Return("リトライ成功コメント", nil)
+				result, err := svc.GetInsectByID(ctx, 1)
+
+				Expect(err).To(BeNil())
+				Expect(result.AIComment).To(Equal("リトライ成功コメント"))
+			})
+		})
 	})
 })

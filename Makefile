@@ -1,4 +1,4 @@
-.PHONY: migrate-up migrate-down seed up down logs lint test mock
+.PHONY: migrate-up migrate-down seed up down logs lint test mock coverage
 
 # DB接続情報（.envから読み込み）
 include .env
@@ -39,6 +39,12 @@ mock:
 	mockgen -source=internal/repositories/insect_repository_interface.go -destination=internal/repositories/mock/mock_insect_repository.go -package=mock
 	mockgen -source=internal/repositories/question_repository_interface.go -destination=internal/repositories/mock/mock_question_repository.go -package=mock
 	mockgen -source=internal/infrastructure/ai/claude_client_interface.go -destination=internal/infrastructure/ai/mock/mock_claude_client.go -package=mock
+
+# カバレッジ計測（HTMLレポート出力）
+coverage:
+	go test -coverprofile=coverage.out ./internal/services/...
+	go tool cover -html=coverage.out -o coverage.html
+	@echo "カバレッジレポート: coverage.html"
 
 # Lint実行
 lint:
