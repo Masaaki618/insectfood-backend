@@ -1,4 +1,6 @@
-FROM golang:1.25.1-bullseye AS deploy-builder
+FROM golang:1.24-bullseye AS deploy-builder
+
+ENV GOTOOLCHAIN=auto
 
 WORKDIR /app
 
@@ -12,7 +14,7 @@ RUN go build -trimpath -ldflags "-w -s" -o app ./cmd/server
 
 FROM debian:bullseye-slim AS deploy
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
 
 COPY --from=deploy-builder /app/app .
 
@@ -20,7 +22,9 @@ CMD ["./app"]
 
 # ---------------------------------------------
 
-FROM golang:1.25.1 AS dev
+FROM golang:1.24 AS dev
+
+ENV GOTOOLCHAIN=auto
 
 WORKDIR /app
 

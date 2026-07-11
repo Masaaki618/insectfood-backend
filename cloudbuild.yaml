@@ -1,0 +1,12 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - --target
+      - deploy
+      - -t
+      - asia-northeast1-docker.pkg.dev/insectfood-app/insectfood/backend:latest
+      - .
+
+images:
+  - asia-northeast1-docker.pkg.dev/insectfood-app/insectfood/backend:latest
