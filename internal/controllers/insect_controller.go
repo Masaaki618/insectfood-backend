@@ -26,6 +26,7 @@ func (c *InsectController) GetInsects(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
+				Code:    http.StatusInternalServerError,
 				Message: "internal server error",
 			},
 		})
@@ -41,6 +42,7 @@ func (c *InsectController) GetInsectByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
+				Code:    http.StatusBadRequest,
 				Message: "invalid id",
 			},
 		})
@@ -51,13 +53,15 @@ func (c *InsectController) GetInsectByID(ctx *gin.Context) {
 		if errors.Is(err, services.ErrNotFound) {
 			ctx.JSON(http.StatusNotFound, dtos.ErrorResponse{
 				Error: dtos.ErrorDetail{
-					Message: "insect not found",
+					Code:    http.StatusNotFound,
+				Message: "insect not found",
 				},
 			})
 			return
 		}
 		ctx.JSON(http.StatusInternalServerError, dtos.ErrorResponse{
 			Error: dtos.ErrorDetail{
+				Code:    http.StatusInternalServerError,
 				Message: "internal server error",
 			},
 		})

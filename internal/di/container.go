@@ -29,5 +29,5 @@ func NewContainer(db *gorm.DB) *routers.Router {
 	diagnosisController := controllers.NewDiagnosisController(diagnosisService)
 
 	// Routerの生成
-	return routers.NewRouter(insectController, questionController, diagnosisController)
+	return routers.NewRouter(db, insectController, questionController, diagnosisController)
 }

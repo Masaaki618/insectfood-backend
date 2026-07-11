@@ -11,6 +11,8 @@ services:
       - go_mod_cache:/go/pkg/mod
     env_file:
       - .env
+    environment:
+      - USE_MOCK_AI=${USE_MOCK_AI:-false}
     depends_on:
       db:
         condition: service_healthy
