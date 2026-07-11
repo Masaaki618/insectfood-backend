@@ -1,0 +1,41 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ソースコードをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: GCPに認証
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: gcloudをセットアップ
+        uses: google-github-actions/setup-gcloud@v2
+
+      - name: DockerをArtifact Registryに認証
+        run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev --quiet
+
+      - name: DockerイメージをCloud Buildでビルド＆プッシュ
+        run: |
+          gcloud builds submit \
+            --config cloudbuild.yaml \
+            --project ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Cloud Runにデプロイ
+        run: |
+          gcloud run deploy insectfood-backend \
+            --image asia-northeast1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/insectfood/backend:latest \
+            --region asia-northeast1 \
+            --platform managed \
+            --allow-unauthenticated \
+            --set-env-vars "SERVER_PORT=8080,DB_HOST=${{ secrets.DB_HOST }},DB_PORT=${{ secrets.DB_PORT }},DB_NAME=${{ secrets.DB_NAME }},DB_USER=${{ secrets.DB_USER }},DB_PASSWORD=${{ secrets.DB_PASSWORD }},DB_TLS=true,ANTHROPIC_API_KEY=${{ secrets.ANTHROPIC_API_KEY }}" \
+            --project ${{ secrets.GCP_PROJECT_ID }}
