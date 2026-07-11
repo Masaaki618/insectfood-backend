@@ -22,8 +22,8 @@ jobs:
       - name: ginkgoのインストール
         run: go install github.com/onsi/ginkgo/v2/ginkgo@latest
 
-      - name: テスト実行
-        run: ginkgo -r ./internal/...
+      - name: テスト実行（Service層・Controller層）
+        run: ginkgo -r ./internal/services/... ./internal/controllers/...
         env:
           GOTOOLCHAIN: local
           CGO_ENABLED: "0"
