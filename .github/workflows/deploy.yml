@@ -26,9 +26,18 @@ jobs:
 
       - name: DockerイメージをCloud Buildでビルド＆プッシュ
         run: |
-          gcloud builds submit \
+          BUILD_ID=$(gcloud builds submit \
             --config cloudbuild.yaml \
-            --project ${{ secrets.GCP_PROJECT_ID }}
+            --project ${{ secrets.GCP_PROJECT_ID }} \
+            --async \
+            --format="value(id)")
+          echo "BUILD_ID=$BUILD_ID" >> $GITHUB_ENV
+          echo "ビルド開始: $BUILD_ID"
+          # ビルド完了まで待機
+          gcloud builds log --stream $BUILD_ID --project ${{ secrets.GCP_PROJECT_ID }} 2>/dev/null || true
+          STATUS=$(gcloud builds describe $BUILD_ID --project ${{ secrets.GCP_PROJECT_ID }} --format="value(status)")
+          echo "ビルドステータス: $STATUS"
+          if [ "$STATUS" != "SUCCESS" ]; then exit 1; fi
 
       - name: Cloud Runにデプロイ
         run: |
