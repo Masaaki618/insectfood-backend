@@ -1,4 +1,4 @@
-.PHONY: migrate-up migrate-down seed up down logs lint test mock coverage
+.PHONY: migrate-up migrate-down seed up up-mock down logs lint test test-repo mock coverage
 
 # DB接続情報（.envから読み込み）
 include .env
@@ -30,9 +30,14 @@ down:
 logs:
 	docker compose logs -f app
 
-# テスト実行
+# テスト実行（Service層・Controller層）
 test:
-	ginkgo -r ./internal/...
+	ginkgo -r ./internal/services/... ./internal/controllers/...
+
+# Repository層のテスト実行（テスト用DBが必要）
+test-repo:
+	docker compose up -d db-test
+	TEST_DB_HOST=127.0.0.1 TEST_DB_PORT=3307 DB_USER=$(DB_USER) DB_PASSWORD=$(DB_PASSWORD) DB_NAME=$(DB_NAME) ginkgo -r ./internal/repositories/...
 
 # モック自動生成
 mock:
