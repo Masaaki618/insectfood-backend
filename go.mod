@@ -1,8 +1,8 @@
 module github.com/Masaaki618/insectfood-backend
 
-go 1.25.1
+go 1.25.0
 
-require github.com/gin-gonic/gin v1.12.0
+require github.com/gin-gonic/gin v1.9.1
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
@@ -48,7 +48,7 @@ require (
 	go.mongodb.org/mongo-driver/v2 v2.5.0 // indirect
 	go.uber.org/mock v0.6.0 // indirect
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
-	golang.org/x/arch v0.25.0 // indirect
+	golang.org/x/arch v0.14.0 // indirect
 	golang.org/x/crypto v0.49.0 // indirect
 	golang.org/x/mod v0.33.0 // indirect
 	golang.org/x/net v0.52.0 // indirect
@@ -57,6 +57,7 @@ require (
 	golang.org/x/text v0.35.0 // indirect
 	golang.org/x/tools v0.42.0 // indirect
 	google.golang.org/protobuf v1.36.11 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/driver/mysql v1.6.0 // indirect
 	gorm.io/gorm v1.31.1 // indirect
 )
