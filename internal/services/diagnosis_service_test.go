@@ -78,6 +78,34 @@ var _ = Describe("DiagnosisService", func() {
 			})
 		})
 
+		Context("スコアが全て最小値（0/0/0）の場合", func() {
+			It("診断結果のDTOを返すこと", func() {
+				minReq := dtos.DiagnosisRequest{
+					Scores: dtos.DiagnosisScores{Visual: 0, Physical: 0, Mental: 0},
+				}
+				mockRepo.EXPECT().GetInsects(ctx).Return(insects, nil)
+				mockClaude.EXPECT().GenerateDiagnosisResult(ctx, uint8(0), uint8(0), uint8(0), insects).Return(uint(1), "コメント", nil)
+
+				res, err := svc.Diagnose(ctx, minReq)
+				Expect(err).To(BeNil())
+				Expect(res.Insect.Name).To(Equal("コオロギ"))
+			})
+		})
+
+		Context("スコアが全て最大値（2/2/2）の場合", func() {
+			It("診断結果のDTOを返すこと", func() {
+				maxReq := dtos.DiagnosisRequest{
+					Scores: dtos.DiagnosisScores{Visual: 2, Physical: 2, Mental: 2},
+				}
+				mockRepo.EXPECT().GetInsects(ctx).Return(insects, nil)
+				mockClaude.EXPECT().GenerateDiagnosisResult(ctx, uint8(2), uint8(2), uint8(2), insects).Return(uint(2), "コメント", nil)
+
+				res, err := svc.Diagnose(ctx, maxReq)
+				Expect(err).To(BeNil())
+				Expect(res.Insect.Name).To(Equal("ミールワーム"))
+			})
+		})
+
 		Context("DBエラーが発生した時に", func() {
 			It("エラーを返すこと", func() {
 				mockRepo.EXPECT().GetInsects(ctx).Return(insects, fmt.Errorf("db error"))
