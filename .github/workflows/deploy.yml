@@ -21,6 +21,17 @@ jobs:
       - name: gcloudをセットアップ
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: golang-migrateをインストール
+        run: |
+          curl -L https://github.com/golang-migrate/migrate/releases/download/v4.18.1/migrate.linux-amd64.tar.gz | tar xvz
+          sudo mv migrate /usr/local/bin/migrate
+
+      - name: DBマイグレーション実行
+        run: |
+          migrate -path rdb/migrations \
+            -database "mysql://${{ secrets.DB_USER }}:${{ secrets.DB_PASSWORD }}@tcp(${{ secrets.DB_HOST }}:${{ secrets.DB_PORT }})/${{ secrets.DB_NAME }}?tls=true" \
+            up
+
       - name: DockerをArtifact Registryに認証
         run: gcloud auth configure-docker asia-northeast1-docker.pkg.dev --quiet
 
